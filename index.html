@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sideswipe Pro Hub</title>
+<style>
+body {
+  margin:0;
+  background:#101827;
+  color:white;
+  font-family:Arial,sans-serif;
+  text-align:center;
+}
+header {
+  padding:24px;
+  background:linear-gradient(120deg,#142d50,#7035a8);
+}
+h1 {margin:5px;color:#50d5ff}
+nav {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:7px;
+  padding:12px;
+}
+button {
+  background:#263c59;
+  color:white;
+  border:1px solid #50d5ff;
+  border-radius:10px;
+  padding:12px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:active {background:#1675a5}
+.card {
+  background:#1b2b41;
+  margin:12px;
+  padding:18px;
+  border-radius:15px;
+  text-align:left;
+}
+.card h2 {color:#50d5ff}
+.page {display:none}
+.page.active {display:block}
+.big {
+  font-size:35px;
+  text-align:center;
+  padding:12px;
+}
+input {
+  width:80%;
+  padding:12px;
+  border-radius:8px;
+}
+</style>
+</head>
+<body>
+
+<header>
+<h1>🚀 SIDESWIPE PRO HUB</h1>
+<p>Train smarter. Play better. Rank up.</p>
+</header>
+
+<nav>
+<button onclick="show('home')">🏠 Home</button>
+<button onclick="show('training')">🚀 Training</button>
+<button onclick="show('controls')">🎮 Controls</button>
+<button onclick="show('freestyle')">⚡ Freestyle</button>
+<button onclick="show('tips')">🏆 Pro Tips</button>
+</nav>
+
+<section id="home" class="page active">
+<div class="card">
+<h2>Welcome Player!</h2>
+<p>Your personal Sideswipe training dashboard.</p>
+<p>Choose a training section above.</p>
+</div>
+<div class="card">
+<h2>🔥 Today's Goal</h2>
+<p>Practice shots, aerials and defense.</p>
+</div>
+</section>
+
+<section id="training" class="page">
+<div class="card">
+<h2>🚀 Training Challenges</h2>
+<label><input type="checkbox"> Practice accurate shots</label><br><br>
+<label><input type="checkbox"> Practice aerial control</label><br><br>
+<label><input type="checkbox"> Practice saves</label><br><br>
+<label><input type="checkbox"> Practice recoveries</label>
+</div>
+<div class="card">
+<h2>⏱️ Training Timer</h2>
+<div class="big" id="timer">05:00</div>
+<button onclick="startTimer()">Start</button>
+<button onclick="stopTimer()">Pause</button>
+<button onclick="resetTimer()">Reset</button>
+</div>
+</section>
+
+<section id="controls" class="page">
+<div class="card">
+<h2>🎮 Mobile Controls</h2>
+<p>Practice these controls:</p>
+<p>⬅️➡️ Steering</p>
+<p>⬆️ Jump</p>
+<p>🚀 Boost</p>
+<p>Practice using jump and boost together.</p>
+</div>
+<div class="card">
+<h2>Control Practice</h2>
+<p>Try playing a few casual matches while focusing on accurate movement.</p>
+</div>
+</section>
+
+<section id="freestyle" class="page">
+<div class="card">
+<h2>⚡ Random Freestyle Challenge</h2>
+<div class="big" id="challenge">Tap below!</div>
+<button onclick="randomChallenge()">New Challenge</button>
+</div>
+<div class="card">
+<h2>Freestyle Practice</h2>
+<p>1. Aerial control</p>
+<p>2. Wall shots</p>
+<p>3. Air dribbling</p>
+<p>4. Flip timing</p>
+<p>5. Landing recovery</p>
+</div>
+</section>
+
+<section id="tips" class="page">
+<div class="card">
+<h2>🏆 Pro Tips</h2>
+<p>⭐ Don't waste your boost.</p>
+<p>⭐ Keep control of your car.</p>
+<p>⭐ Practice defensive saves.</p>
+<p>⭐ Watch your opponent.</p>
+<p>⭐ Practice consistently.</p>
+</div>
+</section>
+
+<script>
+function show(id) {
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+}
+
+let seconds=300;
+let interval=null;
+
+function updateTimer() {
+ let m=Math.floor(seconds/60);
+ let s=seconds%60;
+ document.getElementById('timer').textContent=
+ String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function startTimer() {
+ if(interval) return;
+ interval=setInterval(()=>{
+  if(seconds>0) {
+   seconds--;
+   updateTimer();
+  } else stopTimer();
+ },1000);
+}
+
+function stopTimer() {
+ clearInterval(interval);
+ interval=null;
+}
+
+function resetTimer() {
+ stopTimer();
+ seconds=300;
+ updateTimer();
+}
+
+const challenges=[
+"Practice an aerial shot ⚡",
+"Practice a wall shot 🚀",
+"Practice air dribbling 🔥",
+"Practice accurate flips 🎯",
+"Practice defensive saves 🛡️",
+"Practice landing recoveries 🏆"
+];
+
+function randomChallenge() {
+ let i=Math.floor(Math.random()*challenges.length);
+ document.getElementById('challenge').textContent=challenges[i];
+}
+
+updateTimer();
+</script>
+</body>
+</html>
